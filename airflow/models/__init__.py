@@ -248,6 +248,11 @@ def clear_task_instances(tis,
             dr.state = State.RUNNING
             dr.start_date = timezone.utcnow()
 
+def utc2local(self,utc):
+    import time
+    epoch = time.mktime(utc.timetuple())
+    offset = datetime.fromtimestamp(epoch) - datetime.utcfromtimestamp(epoch)
+    return utc + offset
 
 def get_last_dagrun(dag_id, session, include_externally_triggered=False):
     """
